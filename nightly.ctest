@@ -7,8 +7,9 @@ if(NOT DEFINED GIT_COMMAND)
   find_program(GIT_COMMAND NAMES git git.cmd)
 endif()
 
-execute_process(COMMAND "${GIT_COMMAND} pull"
-                COMMAND "${GIT_COMMAND} submodule update --init" )
+execute_process(COMMAND ${GIT_COMMAND} pull
+                COMMAND ${GIT_COMMAND} submodule update --init
+                WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}" )
 
 message( "Updated repository..." )
 
