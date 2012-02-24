@@ -13,3 +13,4 @@ execute_process(COMMAND "${GIT_COMMAND} pull"
 message( "Updated repository..." )
 
 include( "${CTEST_SCRIPT_DIRECTORY}/nightly-execute.ctest" )
+
