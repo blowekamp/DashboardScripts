@@ -8,8 +8,7 @@ message( "Searching for nightly scripts in ${SITE_SCRIPT_DIRECTORY}" )
 
 if(NOT EXISTS "${CTEST_SCRIPT_DIRECTORY}/${SITE_NAME}" OR NOT
     IS_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/${SITE_NAME}")
-  message( WARNING "There does not appear to be a directory of nightly scripts
-    for this site." )
+  message( WARNING "There does not appear to be a directory of nightly scripts for this site." )
   return()
 endif()
 
