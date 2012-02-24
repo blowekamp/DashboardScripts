@@ -1,0 +1,23 @@
+
+site_name( SITE_NAME )
+
+
+set( SITE_SCRIPT_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/${SITE_NAME}" )
+
+message( "Searching for nightly scripts in ${SITE_SCRIPT_DIRECTORY}" )
+
+if(NOT EXISTS "${CTEST_SCRIPT_DIRECTORY}/${SITE_NAME}" OR NOT
+    IS_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/${SITE_NAME}")
+  message( WARNING "There does not appear to be a directory of nightly scripts
+    for this site." )
+  return()
+endif()
+
+
+
+file( GLOB MORE_CTEST_SCRIPTS "${SITE_SCRIPT_DIRECTORY}/nightly-*.ctest" )
+
+foreach( NEXT_SCRIPT IN LISTS MORE_CTEST_SCRIPTS )
+         message( STATUS "Starting to execute script: ${NEXT_SCRIPT}..." )
+    ctest_run_script( NEW_PROCESS ${NEXT_SCRIPT} )
+endforeach()

@@ -1,0 +1,13 @@
+# This is a boot script which just updates ourselves, then execute the
+# update ctest script.
+
+
+# Look for a GIT command-line client.
+if(NOT DEFINED GIT_COMMAND)
+  find_program(GIT_COMMAND NAMES git git.cmd)
+endif()
+
+execute_process(COMMAND "${GIT_COMMAND} pull"
+                COMMAND "${GIT_COMMAND} submodule update --init")
+
+include( "${CTEST_SCRIPT_DIRECTORY}/nightly-execute.ctest" )
