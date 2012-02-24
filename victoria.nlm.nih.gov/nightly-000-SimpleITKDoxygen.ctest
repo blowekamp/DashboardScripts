@@ -12,10 +12,10 @@ set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
 #
 SET ( DOXYGEN_INSTALL_DIRECTORY "blowekamp@erie.nih.nih.gov:/Users/blowek1/Sites/SimpleITK" )
 
-SET ( CTEST_SOURCE_DIRECTORY "$ENV{HOME}/temp/SimpleITK" )
-SET ( CTEST_BINARY_DIRECTORY "$ENV{HOME}/temp/SimpleITKBUILD" )
+SET ( CTEST_DASHBOARD_ROOT "/scratch/blowekamp/dash/SimpleITK-Doxygen" )
+SET ( CTEST_SOURCE_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK" )
+SET ( CTEST_BINARY_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK-build" )
 FIND_PROGRAM(CTEST_GIT_COMMAND NAMES git)
-#SET ( CTEST_GIT_COMMAND "/usr/local/git/bin/git" )
 
 SET ( GIT_URL "http://itk.org/SimpleITK.git" )
 SET ( GIT_TAG "next" )
@@ -36,7 +36,7 @@ SET( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
 #
 CTEST_EMPTY_BINARY_DIRECTORY( "${CTEST_BINARY_DIRECTORY}" )
 FILE( WRITE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt" "
-      ITK_DIR:PATH=$ENV{HOME}/local/lib/InsightToolkit
+      ITK_DIR:PATH=/scratch/blowekamp/build/ITK
       DOXYGEN_DOT_EXECUTABLE:FILEPATH=/usr/local/bin/dot
       DOXYGEN_DOT_PATH:FILEPATH=/usr/local/bin
       DOXYGEN_EXECUTABLE:FILEPATH=/nfs/Users/blowekamp/Applications/Doxygen.app/Contents/Resources/doxygen
@@ -52,7 +52,7 @@ list ( APPEND CTEST_NOTES_FILES
 #
 # Start the config and generation process
 #
-CTEST_START( CONTINUOUS )
+CTEST_START( NIGHTLY )
 CTEST_UPDATE( SOURCE "${CTEST_SOURCE_DIRECTORY}" )
 CTEST_CONFIGURE( BUILD "${CTEST_BINARY_DIRECTORY}" )
 CTEST_BUILD( BUILD "${CTEST_BINARY_DIRECTORY}" RETURN_VALUE BUILD_RETURN_VALUE )
