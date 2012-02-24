@@ -1,0 +1,6 @@
+[submodule "SimpleITK-dashboard"]
+	path = SimpleITK-dashboard
+	url = git://itk.org/SimpleITK.git
+[submodule "ITK-dashboard"]
+	path = ITK-dashboard
+	url = git://itk.org/ITK.git
