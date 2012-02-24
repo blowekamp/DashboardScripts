@@ -17,6 +17,6 @@ endif()
 file( GLOB MORE_CTEST_SCRIPTS "${SITE_SCRIPT_DIRECTORY}/nightly-*.ctest" )
 
 foreach( NEXT_SCRIPT IN LISTS MORE_CTEST_SCRIPTS )
-         message( STATUS "Starting to execute script: ${NEXT_SCRIPT}..." )
+         message( "Starting to execute script: ${NEXT_SCRIPT}..." )
     ctest_run_script( NEW_PROCESS ${NEXT_SCRIPT} )
 endforeach()

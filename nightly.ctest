@@ -8,8 +8,8 @@ if(NOT DEFINED GIT_COMMAND)
 endif()
 
 execute_process(COMMAND "${GIT_COMMAND} pull"
-                COMMAND "${GIT_COMMAND} submodule update --init")
+                COMMAND "${GIT_COMMAND} submodule update --init" )
 
-message( STATUS "Updated repository..." )
+message( "Updated repository..." )
 
 include( "${CTEST_SCRIPT_DIRECTORY}/nightly-execute.ctest" )
