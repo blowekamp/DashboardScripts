@@ -23,5 +23,5 @@ set (dashboard_cache "
 
 set(dashboard_git_branch next)
 
-include(${CTEST_SCRIPT_DIRECTORY}/scripts/simpleitk_common.cmake)
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 

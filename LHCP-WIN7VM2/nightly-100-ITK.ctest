@@ -16,4 +16,5 @@ set (dashboard_cache "
     ITK_USE_CONCEPT_CHECKING:BOOL=ON
 ")
 
-include(${CTEST_SCRIPT_DIRECTORY}/ITKdashboard/itk_common.cmake)
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)

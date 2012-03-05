@@ -26,5 +26,5 @@ set (dashboard_cache "
 ")
 
 
-include(${CTEST_SCRIPT_DIRECTORY}/scripts/simpleitk_common.cmake)
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 
