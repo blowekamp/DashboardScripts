@@ -1,0 +1,30 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+set( CTEST_SITE lhcp-win7vm2.nlm )
+set( CTEST_BUILD_NAME Win64-vs10-SimpleITK-debug-super-next )
+set( CTEST_CONFIGURATION_TYPE Debug )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 10 Win64" )
+set( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
+
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs10-debug" )
+
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
+set ( CTEST_TEST_TIMEOUT 3000 )
+
+set(dashboard_git_branch next)
+
+set (dashboard_cache "
+  CMAKE_LINKER_FLAGS:STRING=/INCREMENTAL:NO
+  WRAP_JAVA:BOOL=OFF
+  WRAP_LUA:BOOL=ON
+  WRAP_PYTHON:BOOL=OFF
+  WRAP_RUBY:BOOL=OFF
+  WRAP_TCL:BOOL=OFF
+  WRAP_CSHARP:BOOL=OFF
+")
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/scripts/simpleitk_common.cmake)
+

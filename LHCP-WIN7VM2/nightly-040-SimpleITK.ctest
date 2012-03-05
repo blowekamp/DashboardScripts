@@ -1,0 +1,27 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+set( CTEST_SITE lhcp-win7vm2.nlm )
+set( CTEST_BUILD_NAME Win64-vs9-SimpleITK-super-next )
+set( CTEST_CONFIGURATION_TYPE Release )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008 Win64" )
+set ( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
+
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs9" )
+
+set ( dashboard_git_branch "next" )
+
+# set ( CTEST_BUILD_FLAGS )
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
+set ( CTEST_TEST_TIMEOUT 3000 )
+
+set (dashboard_cache "
+  CMAKE_MODULE_LINKER_FLAGS:STRING=/expectedoutputsize:2000000000
+")
+
+
+set(dashboard_git_branch next)
+
+include(${CTEST_SCRIPT_DIRECTORY}/scripts/simpleitk_common.cmake)
+
