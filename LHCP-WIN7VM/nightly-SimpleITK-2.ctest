@@ -3,7 +3,7 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE lhcp-win7vm.nlm )
-set( CTEST_BUILD_NAME Win32-vs10-SimpleITK-super-next )
+set( CTEST_BUILD_NAME Win32-vs10-release-next )
 set( CTEST_CONFIGURATION_TYPE Release )
 set( CTEST_CMAKE_GENERATOR "Visual Studio 10" )
 set( CTEST_GIT_COMMAND "C:/Program Files/Git/bin/git.exe" )
@@ -12,7 +12,7 @@ set ( dashboard_git_branch "next" )
 
 set ( CTEST_DASHBOARD_ROOT c:/d/vs10 )
 
-set ( CTEST_TEST_ARGS PARALLEL_LEVEL 2 )
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 1 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
 set ( dashboard_git_branch "next" )
