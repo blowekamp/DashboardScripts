@@ -6,7 +6,7 @@
 set ( dashboard_git_branch "next" )
 
 # Set names
-set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_SITE "lhcp-vm-ubu10.nlm" )
 set( CTEST_BUILD_NAME "Ubuntu10-SimpleITK-super-${dashboard_git_branch}" )
 
 #  Set how and where to build
