@@ -10,6 +10,9 @@ set( CTEST_GIT_COMMAND "C:/Program Files/Git/bin/git.exe" )
 
 set ( dashboard_git_branch "next" )
 
+# we need to manually set path for ITK libraries
+set( ENV{PATH} "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/bin;${CTEST_DASHBOARD_ROOT}/SimpleITK-build/ITK-prefix/bin;$ENV{PATH}" )
+
 set ( CTEST_DASHBOARD_ROOT c:/d/vs10-s )
 
 set ( CTEST_TEST_ARGS PARALLEL_LEVEL 1 )
