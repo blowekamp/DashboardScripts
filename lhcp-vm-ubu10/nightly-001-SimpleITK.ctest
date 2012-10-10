@@ -1,0 +1,41 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+
+set ( dashboard_git_branch "release" )
+
+# Set names
+set( CTEST_SITE "lhcp-vm-ubu10.nlm" )
+set( CTEST_BUILD_NAME "Ubuntu10-${dashboard_git_branch}" )
+
+#  Set how and where to build
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set ( CTEST_DASHBOARD_ROOT "/scratch/blowekamp/dashboards/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+# Enable usage of multi-processors
+set ( CTEST_BUILD_FLAGS -j2 )
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 2 )
+
+
+# Set initial values for the CMakeCache
+set ( dashboard_cache "
+  CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden -s
+  CMAKE_C_FLAGS:STRING=-fvisibility=hidden -s
+  # JIRA issue number SIMPLEITK-268
+  # this platforms mono compiler does not appear to support /platform
+  WRAP_CSHARP:BOOL=OFF
+  WRAP_LUA:BOOL=OFF
+  WRAP_PYTHON:BOOL=ON
+  WRAP_JAVA:BOOL=OFF
+  WRAP_CSHARP:BOOL=OFF
+  WRAP_TCL:BOOL=OFF
+  WRAP_R:BOOL=OFF
+  WRAP_RUBY:BOOL=OFF
+")
+
+# Include common ctest script
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)

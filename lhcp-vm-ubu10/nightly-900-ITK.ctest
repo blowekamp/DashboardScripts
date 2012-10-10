@@ -1,0 +1,35 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+
+# Set names
+set( CTEST_SITE "lhcp-vm-ubu10.nlm" )
+set( CTEST_BUILD_NAME "Ubuntu-x86_64-gcc4.4.3-maint" )
+
+# Set how and where to build
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+
+#set the branch to the "relase" maintanance branch
+set( dashboard_git_branch "release" )
+
+
+# Enable usage of multi-processors
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+# this is the initial cache to use for the binary tree.
+SET (dashboard_cache "
+    ITK_USE_REVIEW:BOOL=ON
+" )
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
