@@ -1,0 +1,87 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+# Set names
+set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_BUILD_NAME "RH5.7-SimpleITK-coverage" )
+
+#  Set how and where to build
+set ( CTEST_BUILD_CONFIGURATION "Debug" )
+set ( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set ( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+set ( CTEST_SOURCE_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK" )
+set ( CTEST_BINARY_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK-build" )
+
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set( dashboard_model Nightly )
+set( dashboard_git_branch "next" )
+set( dashboard_do_coverage 1 )
+
+
+# Set initial values for the CMakeCache
+set ( DASHBOARD_CACHE "
+    BUILD_SHARED_LIBS:BOOL=OFF
+    CMAKE_CXX_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+    CMAKE_C_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+    ITK_DIR:PATH=/scratch/$ENV{USER}/dashboards/Linux-x86_64-gcc4.1/ITK-build
+    CMAKE_EXE_LINKER_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+    COVERAGE_COMMAND:PATH=/usr/bin/gcov
+    WRAP_LUA:BOOL=OFF
+    WRAP_PYTHON:BOOL=OFF
+    WRAP_JAVA:BOOL=OFF
+    WRAP_CSHARP:BOOL=OFF
+    WRAP_TCL:BOOL=OFF
+    WRAP_R:BOOL=OFF
+    WRAP_RUBY:BOOL=OFF
+")
+
+
+
+##########################################################
+# Need custom cdash script to do coverage
+##########################################################
+
+
+find_program ( CTEST_GIT_COMMAND NAMES git )
+
+set ( GIT_URL "git://itk.org/SimpleITK.git" )
+set ( GIT_TAG "next" )
+
+# the "--recursive" option for clone in avaiable on new versions of
+# git, if this causses an error please update your version of git
+if (NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
+  set ( CTEST_CHECKOUT_COMMAND  "${CTEST_GIT_COMMAND} clone -b ${GIT_TAG} --recursive ${GIT_URL} ${CTEST_SOURCE_DIRECTORY}")
+endif (NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
+set ( CTEST_UPDATE_COMMAND "${CTEST_GIT_COMMAND}" )
+
+
+# Send this main script as a note.
+list (APPEND CTEST_NOTES_FILES
+  "${CMAKE_CURRENT_LIST_FILE}"
+  )
+
+#
+# Prepare a clean binary directory with configuration
+#
+ctest_empty_binary_directory( "${CTEST_BINARY_DIRECTORY}" )
+file ( WRITE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt"  "${DASHBOARD_CACHE}" )
+
+#
+# Start the config and generation process
+#
+ctest_start( NIGHTLY )
+ctest_update( SOURCE "${CTEST_SOURCE_DIRECTORY}" )
+ctest_configure( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_read_custom_files( "${CTEST_BINARY_DIRECTORY}" )
+ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_submit()

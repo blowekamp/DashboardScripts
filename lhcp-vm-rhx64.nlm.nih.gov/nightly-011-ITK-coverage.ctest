@@ -1,0 +1,38 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+
+# Set names
+set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4" )
+
+# Set how and where to build
+set( CTEST_BUILD_CONFIGURATION "Debug" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+
+set( CTEST_COVERAGE_COMMAND /usr/bin/gcov)
+set( dashboard_do_coverage ON )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+# this is the initial cache to use for the binary tree.
+SET (dashboard_cache "
+    CMAKE_CXX_COMPILER=/usr/bin/g++44
+    CMAKE_C_COMPILER=/usr/bin/gcc44
+    CMAKE_CXX_FLAGS_DEBUG:STRING=-g -O0 -fprofile-arcs -ftest-coverage -fPIC
+    CMAKE_C_FLAGS_DEBUG:STRING=-g -O0 -fprofile-arcs -ftest-coverage -fPIC
+    CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=-g -O0 -fprofile-arcs -ftest-coverage -fPIC
+    COVERAGE_COMMAND:PATH=/usr/bin/gcov
+" )
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
