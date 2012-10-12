@@ -17,7 +17,6 @@ set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
 set (dashboard_cache "
-  CMAKE_MODULE_LINKER_FLAGS:STRING=/expectedoutputsize:2000000000
 ")
 
 
