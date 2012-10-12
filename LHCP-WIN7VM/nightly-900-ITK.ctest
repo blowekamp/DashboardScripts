@@ -1,0 +1,22 @@
+# Client maintainer: blowekamp@mail.nih.gov
+set(CTEST_SITE lhcp-win7vm.nlm)
+set(CTEST_BUILD_NAME "Win32-VS10-Release-maint")
+set(CTEST_BUILD_CONFIGURATION Release)
+set(CTEST_CMAKE_GENERATOR "Visual Studio 10")
+set(CTEST_GIT_COMMAND "C:/Program Files/Git/bin/git.exe")
+set(CTEST_DASHBOARD_ROOT "c:/d/itk-vs10-32r-maint")
+
+# set the branch to the "release" maintainance branch
+set( dashboard_git_branch "release" )
+
+set (dashboard_cache "
+    BUILD_TESTING:BOOL=ON
+    BUILD_EXAMPLES:BOOL=ON
+    ITK_BUILD_ALL_MODULES:BOOL=ON
+    ITK_LEGACY_SILENT:BOOL=ON
+    ITK_USE_REVIEW:BOOL=ON
+    ITK_USE_CONCEPT_CHECKING:BOOL=ON
+")
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
