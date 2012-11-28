@@ -1,0 +1,52 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+# gcc (GCC) 4.4.6 20120305 (Red Hat 4.4.6-4)
+
+set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4.6" )
+
+set( CTEST_BUILD_CONFIGURATION "Debug" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+set( dashboard_model Nightly )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 2)
+set( CTEST_TEST_TIMEOUT 20000 )
+
+set( dashboard_do_memcheck ON )
+
+macro(dashboard_hook_init)
+  set(CTEST_MEMORYCHECK_COMMAND /usr/bin/valgrind)
+  set(CTEST_MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all")
+  set(CTEST_MEMORYCHECK_SUPPRESSIONS_FILE ${CTEST_SOURCE_DIRECTORY}/CMake/InsightValgrind-RHEL6.supp)
+
+  set( dashboard_cache "
+    BUILD_TESTING:BOOL=ON
+    BUILD_EXAMPLES:BOOL=ON
+    BUILD_SHARED_LIBS:BOOL=ON
+    ITK_LEGACY_SILENT:BOOL=ON
+    ITK_USE_REVIEW:BOOL=ON
+    MEMORYCHECK_COMMAND:FILEPATH=${CTEST_MEMORYCHECK_COMMAND}
+    MEMORYCHECK_COMMAND_OPTIONS:STRING=${CTEST_MEMORYCHECK_COMMAND_OPTIONS}
+    MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=${CTEST_MEMORYCHECK_SUPPRESSIONS_FILE}
+    "
+    )
+
+  if("${dashboard_model}" STREQUAL "Nightly")
+    message("Making sure to use the nightly-master branch")
+    execute_process(
+      COMMAND "${CTEST_GIT_COMMAND}" checkout nightly-master
+      WORKING_DIRECTORY "${CTEST_SOURCE_DIRECTORY}"
+      )
+  endif()
+endmacro(dashboard_hook_init)
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
