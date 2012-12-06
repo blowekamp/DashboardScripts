@@ -10,13 +10,13 @@ set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.1" )
 # Set how and where to build
 set( CTEST_BUILD_CONFIGURATION "Debug" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
-set( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
 
 set( dashboard_model Nightly )
 
 
 set( CTEST_COVERAGE_COMMAND /usr/bin/gcov)
-set( dashboard_do_coverage ON )
+set( dashboard_do_coverage OFF )
 
 include( ProcessorCount )
 ProcessorCount( PROCESSOR_COUNT )

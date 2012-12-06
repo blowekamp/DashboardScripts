@@ -9,7 +9,7 @@ set( CTEST_BUILD_NAME "RH5.7-SimpleITK-coverage" )
 #  Set how and where to build
 set ( CTEST_BUILD_CONFIGURATION "Debug" )
 set ( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
-set ( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+set ( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
 set ( CTEST_SOURCE_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK" )
 set ( CTEST_BINARY_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK-build" )
 
@@ -20,6 +20,8 @@ if(PROCESSOR_COUNT)
   set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
   set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
 endif()
+
+set ( CTEST_COVERAGE_COMMAND /usr/bin/gcov)
 
 set( dashboard_model Nightly )
 set( dashboard_git_branch "next" )
