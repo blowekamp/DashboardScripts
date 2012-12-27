@@ -1,0 +1,46 @@
+
+set( CTEST_SITE "mini6.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-ITK-RemoteExample" )
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+
+
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set( CTEST_TEST_TIMEOUT 3000 )
+
+
+macro(dashboard_hook_init)
+  set( REMOTE_DATA "
+itk_fetch_module(LesionSizingToolkit
+  \"Framework for determining the sizes of lesions in medical images.\"
+  GIT_REPOSITORY http://public.kitware.com/LesionSizingToolkit.git
+  GIT_TAG 76235ea768b
+  )" )
+
+  file(WRITE "${CTEST_DASHBOARD_ROOT}/ITK/Modules/Remotes/ExternalTemplate.remote.cmake"
+    ${REMOTE_DATA} )
+endmacro()
+
+# this is the initial cache to use for the binary tree, be careful to escape
+# any quotes inside of this string if you use it
+SET (dashboard_cache "
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/llvm-g++-4.2
+    CMAKE_C_COMPILER:STRING=/usr/bin/llvm-gcc-4.2
+    BUILD_SHARED_LIBS:BOOL=ON
+
+    ITK_OSIRIX_DATA_ROOT:PATH=/nfs/Data/Osirix/
+    ITK_VISIBLEHUMAN_DATA_ROOT:PATH=/nfs/Data/VisibleHuman
+
+    ITK_USE_REVIEW:BOOL=ON
+    ITK_USE_KWSTYLE:BOOL=ON
+")
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)

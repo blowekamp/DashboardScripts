@@ -1,0 +1,81 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+
+set( CTEST_SITE "mini6.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-SimpleITK-next" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+
+set ( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+set ( CTEST_SOURCE_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK" )
+set ( CTEST_BINARY_DIRECTORY "${CTEST_DASHBOARD_ROOT}/SimpleITK-build" )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set ( CTEST_TEST_TIMEOUT 3000 )
+
+set ( DASHBOARD_CACHE "
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/llvm-g++-4.2
+    CMAKE_C_COMPILER:STRING=/usr/bin/llvm-gcc-4.2
+    ITK_DIR:PATH=/scratch/dashboards/MacOSX-ITK-RemoteExample/ITK-build
+    CMAKE_BUILD_TYPE:STRING=Release
+
+    # This system is by default mixing python versions, so it needs to be manually set
+    PYTHON_INCLUDE_DIR:PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/Headers
+    PYTHON_LIBRARY:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib
+    PYTHON_EXECUTABLE:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+
+    WRAP_JAVA:BOOL=ON
+    WRAP_LUA:BOOL=ON
+    WRAP_PYTHON:BOOL=ON
+    WRAP_RUBY:BOOL=ON
+    WRAP_TCL:BOOL=ON
+    WRAP_R:BOOL=OFF
+"
+)
+
+##########################################################
+# No need to edit below here for standard nightly builds #
+##########################################################
+
+
+find_program ( CTEST_GIT_COMMAND NAMES git )
+
+set ( GIT_URL "http://itk.org/SimpleITK.git" )
+set ( GIT_TAG "next" )
+
+# the "--recursive" option for clone in avaiable on new versions of
+# git, if this causses an error please update your version of git
+if (NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
+  set ( CTEST_CHECKOUT_COMMAND  "${CTEST_GIT_COMMAND} clone -b ${GIT_TAG} --recursive ${GIT_URL} ${CTEST_SOURCE_DIRECTORY}")
+endif (NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
+set ( CTEST_UPDATE_COMMAND "${CTEST_GIT_COMMAND}" )
+
+
+# Send this main script as a note.
+list (APPEND CTEST_NOTES_FILES
+  "${CMAKE_CURRENT_LIST_FILE}"
+  )
+
+#
+# Prepare a clean binary directory with configuration
+#
+ctest_empty_binary_directory( "${CTEST_BINARY_DIRECTORY}" )
+file ( WRITE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt"  "${DASHBOARD_CACHE}" )
+
+#
+# Start the config and generation process
+#
+ctest_start( NIGHTLY )
+ctest_update( SOURCE "${CTEST_SOURCE_DIRECTORY}" )
+ctest_configure( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_read_custom_files( "${CTEST_BINARY_DIRECTORY}" )
+ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" )
+ctest_test( )
+ctest_submit()

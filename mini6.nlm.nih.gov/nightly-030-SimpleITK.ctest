@@ -1,0 +1,36 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+set( CTEST_SITE mini6.nlm )
+set( CTEST_BUILD_NAME "OSX10.7-clang-R" )
+set( CTEST_CONFIGURATION_TYPE Release )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles")
+
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set ( dashboard_git_branch "next" )
+
+
+set (dashboard_cache "
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/clang++
+    CMAKE_C_COMPILER:STRING=/usr/bin/clang
+
+    WRAP_LUA:BOOL=OFF
+    WRAP_PYTHON:BOOL=OFF
+    WRAP_JAVA:BOOL=OFF
+    WRAP_CSHARP:BOOL=OFF
+    WRAP_TCL:BOOL=OFF
+    WRAP_R:BOOL=ON
+    WRAP_RUBY:BOOL=OFF
+")
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)

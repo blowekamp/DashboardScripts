@@ -1,0 +1,41 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+set( CTEST_SITE mini6.nlm )
+set( CTEST_BUILD_NAME "OSX10.7-llvm-gcc-4.2-i386-release" )
+set( CTEST_CONFIGURATION_TYPE Release )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles")
+
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set ( dashboard_git_branch "release" )
+
+
+set (dashboard_cache "
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/llvm-g++-4.2
+    CMAKE_C_COMPILER:STRING=/usr/bin/llvm-gcc-4.2
+    CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+    CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+    CMAKE_OSX_ARCHITECTURES:STRING=i386
+    # This system is by default mixing python versions, to it needs to be manually set
+    PYTHON_INCLUDE_DIR:PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/Headers
+    PYTHON_LIBRARY:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib
+    PYTHON_EXECUTABLE:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+    WRAP_LUA:BOOL=OFF
+    WRAP_PYTHON:BOOL=ON
+    WRAP_JAVA:BOOL=ON
+    WRAP_CSHARP:BOOL=OFF
+    WRAP_TCL:BOOL=OFF
+    WRAP_R:BOOL=OFF
+    WRAP_RUBY:BOOL=OFF
+")
+
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
