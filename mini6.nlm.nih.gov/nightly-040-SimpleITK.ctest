@@ -2,6 +2,7 @@
 # git submoules
 cmake_minimum_required ( VERSION 2.8.2 )
 
+
 set( CTEST_SITE mini6.nlm )
 set( CTEST_BUILD_NAME "OSX10.7-llvm-gcc-4.2-master" )
 set( CTEST_CONFIGURATION_TYPE Release )
@@ -26,20 +27,23 @@ set (dashboard_cache "
     PYTHON_INCLUDE_DIR:PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/Headers
     PYTHON_LIBRARY:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib
     PYTHON_EXECUTABLE:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+    CMAKE_OSX_ARCHITECTURES=i386;x86_64
+    ITK_USE_SYSTEM_HDF5:BOOL=ON
 ")
 
 macro ( dashboard_hook_end )
-  if ( NOT build_return_value )
-    if ( dashboard_git_branch EQUAL "master" )
-      file ( GLOB PY_EGG "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Wrapping/dist/*.egg" )
-      set ( packages ${PY_EGG} )
-      foreach( f ${packages} )
-        message( "UPLOADING: ${f}" )
-        execute_process ( COMMAND scp "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages" )
-      endforeach()
-    else()
-      message( "Build failure, not uploading!" )
-    endif()
+  message( "build_number_errors: ${build_number_errors}" )
+  if ( ${build_number_errors} EQUAL "0" )
+    message ( "dashboard_git_branch: ${dashboard_git_branch}" )
+    file ( GLOB PY_EGG "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Wrapping/dist/*.egg" )
+    set ( packages ${PY_EGG} )
+    foreach( f ${packages} )
+      message( "UPLOADING: ${f}" )
+      execute_process ( COMMAND scp "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages" )
+    endforeach()
+
+  else()
+    message( "Build failure, not uploading!" )
   endif()
 endmacro()
 

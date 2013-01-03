@@ -3,7 +3,7 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE mini6.nlm )
-set( CTEST_BUILD_NAME "OSX10.7-llvm-gcc-4.2-x86_64-release" )
+set( CTEST_BUILD_NAME "OSX10.7-llvm-gcc-4.2-release" )
 set( CTEST_CONFIGURATION_TYPE Release )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles")
 
@@ -24,7 +24,8 @@ set (dashboard_cache "
     CMAKE_C_COMPILER:STRING=/usr/bin/llvm-gcc-4.2
     CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
     CMAKE_C_FLAGS:STRING=-fvisibility=hidden
-    CMAKE_OSX_ARCHITECTURES:STRING=x86_64
+    CMAKE_OSX_ARCHITECTURES=i386;x86_64
+    ITK_USE_SYSTEM_HDF5:BOOL=ON
     # This system is by default mixing python versions, to it needs to be manually set
     PYTHON_INCLUDE_DIR:PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/Headers
     PYTHON_LIBRARY:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib
@@ -37,5 +38,22 @@ set (dashboard_cache "
     WRAP_R:BOOL=OFF
     WRAP_RUBY:BOOL=OFF
 ")
+
+macro ( dashboard_hook_end )
+  message( "build_number_errors: ${build_number_errors}" )
+  if ( ${build_number_errors} EQUAL "0" )
+    message ( "dashboard_git_branch: ${dashboard_git_branch}" )
+    file ( GLOB PY_EGG "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Wrapping/dist/*.egg" )
+    set ( packages ${PY_EGG} )
+    foreach( f ${packages} )
+      message( "UPLOADING: ${f}" )
+      execute_process ( COMMAND scp "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages" )
+    endforeach()
+
+  else()
+    message( "Build failure, not uploading!" )
+  endif()
+endmacro()
+
 
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
