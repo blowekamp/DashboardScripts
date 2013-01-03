@@ -1,0 +1,24 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+
+set ( dashboard_git_branch "next" )
+
+# Set names
+set( CTEST_SITE "lhcp-vm-ubu12x64.nlm" )
+set( CTEST_BUILD_NAME "Ubuntu12x64-SimpleITK-${dashboard_git_branch}" )
+
+#  Set how and where to build
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set ( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+# Set initial values for the CMakeCache
+set ( dashboard_cache "
+")
+
+# Include common ctest script
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
