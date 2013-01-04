@@ -27,5 +27,7 @@ set (dashboard_cache "
 " )
 
 set ( CTEST_START_WITH_EMPTY_BINARY_DIRECTORY TRUE)
+
+include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 
