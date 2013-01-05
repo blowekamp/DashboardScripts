@@ -1,0 +1,54 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+cmake_minimum_required ( VERSION 2.8.2 )
+
+# set some options
+set ( dashboard_git_branch "release" )
+set( CTEST_BUILD_CONFIGURATION "Release" )
+
+# Set names
+set( CTEST_SITE "mini5.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-${dashboard_git_branch}-${CTEST_BUILD_CONFIGURATION}" )
+
+
+#  Set how and where to build
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+
+set( dashboard_model Nightly )
+
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set ( dashboard_cache "
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/g++-4.2
+    CMAKE_C_COMPILER:STRING=/usr/bin/gcc-4.2
+    CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+    CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+
+    CMAKE_OSX_ARCHITECTURES=i386;x86_64
+    ITK_USE_SYSTEM_HDF5:BOOL=ON
+
+
+    PYTHON_INCLUDE_DIR:PATH=/System/Library/Frameworks/Python.framework/Versions/2.6/Headers
+    PYTHON_LIBRARY:FILEPATH=/usr/lib/libpython2.6.dylib
+    PYTHON_EXECUTABLE:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
+    WRAP_LUA:BOOL=OFF
+    WRAP_PYTHON:BOOL=ON
+    WRAP_JAVA:BOOL=ON
+    WRAP_CSHARP:BOOL=OFF
+    WRAP_TCL:BOOL=OFF
+    WRAP_R:BOOL=OFF
+    WRAP_RUBY:BOOL=OFF
+")
+
+include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
+# Include common ctest script
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
