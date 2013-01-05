@@ -3,7 +3,8 @@ if ( ${dashboard_git_branch} EQUAL "master" OR
     ${dashboard_git_branch} EQUAL "release" )
 
   # set cmake flag to remove git hash for name
-  set( SimpleITK_BUILD_DISTRIBUTE 1 )
+  set( dashboard_cache "${dashboard_cache}
+  SimpleITK_BUILD_DISTRIBUTE:BOOL=ON" )
 endif()
 
 
