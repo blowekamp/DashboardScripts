@@ -28,6 +28,6 @@ set (dashboard_cache "
 ")
 
 
-include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
+
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 

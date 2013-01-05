@@ -3,12 +3,12 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE lhcp-win7vm2.nlm )
-set( CTEST_BUILD_NAME vs9-release )
+set( CTEST_BUILD_NAME "Win32vs9-release" )
 set( CTEST_CONFIGURATION_TYPE Release )
-set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008 Win64" )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008" )
 set ( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
 
-set ( CTEST_DASHBOARD_ROOT "c:/d/vs9-release" )
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs9-release-32" )
 
 set ( dashboard_git_branch "release" )
 
@@ -16,6 +16,7 @@ set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
 set (dashboard_cache "
+    CSHARP_PLATFORM:STRING=x86
     BUILD_SHARED_LIBS:BOOL=OFF
     WRAP_LUA:BOOL=OFF
     WRAP_PYTHON:BOOL=ON
