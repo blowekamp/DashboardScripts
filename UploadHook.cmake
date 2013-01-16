@@ -7,6 +7,11 @@ if ( ${dashboard_git_branch} EQUAL "master" OR
   SimpleITK_BUILD_DISTRIBUTE:BOOL=ON" )
 endif()
 
+find_program(SCP_EXECUTABLE
+  NAMES scp
+  PATH_SUFFIXES Git/cmd Git/bin
+  DOC "scp executable"
+  )
 
 macro ( dashboard_hook_end )
   message( "build_number_errors: ${build_number_errors}" )
@@ -18,7 +23,7 @@ macro ( dashboard_hook_end )
       get_filename_component( d "${f}" PATH )
       get_filename_component( f "${f}" NAME )
       message( "UPLOADING: ${d}/${f}" )
-      execute_process ( COMMAND scp "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages" 
+      execute_process ( COMMAND "${SCP_EXECUTABLE}" "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages"
       WORKING_DIRECTORY "${d}")
     endforeach()
 
