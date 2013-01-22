@@ -1,17 +1,27 @@
 # This is a boot script which just updates ourselves, then execute the
 # update ctest script.
 
+find_package(Git REQUIRED)
 
-# Look for a GIT command-line client.
-if(NOT DEFINED GIT_COMMAND)
-  find_program(GIT_COMMAND NAMES git git.cmd)
+if( NOT DEFINED ENV{HOME} AND DEFINED ENV{USERPROFILE} )
+    message( "Setting HOME to $ENV{USERPROFILE}" )
+    set( ENV{HOME} $ENV{USERPROFILE} )
 endif()
 
 execute_process(COMMAND ${GIT_COMMAND} pull origin
   WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}" )
 
 execute_process( COMMAND ${GIT_COMMAND} submodule update
-  WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}" )
+  WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}"
+  RESULT_VARIABLE _r
+  OUTPUT_VARIABLE _o
+  ERROR_VARIABLE _e )
+
+
+message("results: ${_r}")
+message("output: ${_o}")
+message("error: ${_e}")
+
 
 message( "Updated repository..." )
 
