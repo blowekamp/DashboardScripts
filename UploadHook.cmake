@@ -1,6 +1,6 @@
 
-if ( ${dashboard_git_branch} EQUAL "master" OR
-    ${dashboard_git_branch} EQUAL "release" )
+if ( dashboard_git_branch STREQUAL "master" OR
+    dashboard_git_branch STREQUAL "release" )
 
   # set cmake flag to remove git hash for name
   set( dashboard_cache "${dashboard_cache}
