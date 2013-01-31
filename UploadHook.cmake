@@ -22,8 +22,8 @@ macro ( dashboard_hook_end )
     foreach( f ${packages} )
       get_filename_component( d "${f}" PATH )
       get_filename_component( f "${f}" NAME )
-      message( "EXECUTING: \"${SCP_EXECUTABLE}\" \"${f}\" \"blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages\"")
-      execute_process ( COMMAND "${SCP_EXECUTABLE}" "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages"
+      message( "EXECUTING: \"${SCP_EXECUTABLE}\" -p \"${f}\" \"blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages\"")
+      execute_process ( COMMAND "${SCP_EXECUTABLE}" -p "${f}" "blowek1@erie.nlm.nih.gov:/Users/blowek1/Sites/SimpleITKPackages"
       WORKING_DIRECTORY "${d}"
       RESULT_VARIABLE _r
       OUTPUT_VARIABLE _o
