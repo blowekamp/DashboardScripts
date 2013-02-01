@@ -3,15 +3,16 @@
 
 find_package(Git REQUIRED)
 
+
 if( NOT DEFINED ENV{HOME} AND DEFINED ENV{USERPROFILE} )
     message( "Setting HOME to $ENV{USERPROFILE}" )
     set( ENV{HOME} $ENV{USERPROFILE} )
 endif()
 
-execute_process(COMMAND ${GIT_COMMAND} pull origin
+execute_process(COMMAND ${GIT_EXECUTABLE} pull origin
   WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}" )
 
-execute_process( COMMAND ${GIT_COMMAND} submodule update
+execute_process(COMMAND ${GIT_EXECUTABLE} submodule update
   WORKING_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}"
   RESULT_VARIABLE _r
   OUTPUT_VARIABLE _o
