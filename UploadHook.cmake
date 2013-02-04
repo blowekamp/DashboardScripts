@@ -15,6 +15,10 @@ find_program(SCP_EXECUTABLE
 
 macro ( dashboard_hook_end )
   message( "build_number_errors: ${build_number_errors}" )
+
+  # build the distribution target to make the packages to upload
+  ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" TARGET dist )
+
   if ( ${build_number_errors} EQUAL "0" )
     message ( "dashboard_git_branch: ${dashboard_git_branch}" )
     file ( GLOB PY_EGG "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Wrapping/dist/*.egg" )
