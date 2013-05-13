@@ -17,6 +17,12 @@ set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
 set (dashboard_cache "
+    # with both 32-bit and 64-bit JAVA SDKs install we need to manually set the correct execs
+    Java_JAR_EXECUTABLE:FILEPATH=C:/Program\ Files/Java/jdk1.7.0_21/bin/jar.exe
+    Java_JAVAC_EXECUTABLE:FILEPATH=C:/Program\ Files/Java/jdk1.7.0_21/bin/javac.exe
+    Java_JAVADOC_EXECUTABLE:FILEPATH=C:/Program\ Files/Java/jdk1.7.0_21/bin/javadoc.exe
+    Java_JAVAH_EXECUTABLE:FILEPATH=C:/Program\ Files/Java/jdk1.7.0_21/bin/javah.exe
+    Java_JAVA_EXECUTABLE:FILEPATH=C:/Program\ Files/Java/jdk1.7.0_21/bin/java.exe  
 ")
 
 
