@@ -1,0 +1,36 @@
+
+set( CTEST_SITE "mini7.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-clang" )
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+
+set( CTEST_DASHBOARD_ROOT "$ENV{PLAYPEN}/${CTEST_BUILD_NAME}" )
+
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set ( dashboard_model Continuous )
+set ( dashboard_loop 64800 )
+
+
+# this is the initial cache to use for the binary tree, be careful to escape
+# any quotes inside of this string if you use it
+SET (dashboard_cache "
+    BUILD_TESTING:BOOL=ON
+    BUILD_EXAMPLES:BOOL=ON
+    Module_ITKReview:BOOL=ON
+    ITK_LEGACY_REMOVE:BOOL=OFF
+    ITK_LEGACY_SILENT:BOOL=ON
+    ITK_USE_KWSTYLE:BOOL=OFF
+    ITK_USE_GPU:BOOL=ON
+    CMAKE_CXX_COMPILER:STRING=/usr/bin/clang++
+    CMAKE_C_COMPILER:STRING=/usr/bin/clang
+")
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
