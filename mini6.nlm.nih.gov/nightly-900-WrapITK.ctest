@@ -27,7 +27,7 @@ SET (dashboard_cache "
     ITK_OSIRIX_DATA_ROOT:PATH=/nfs/Data/Osirix/
     ITK_VISIBLEHUMAN_DATA_ROOT:PATH=/nfs/Data/VisibleHuman
 
-    ITK_USE_REVIEW:BOOL=ON
+    Module_ITKReview:BOOL=ON
     ITK_USE_KWSTYLE:BOOL=ON
 
    ITK_WRAP_PYTHON:BOOLS=ON
