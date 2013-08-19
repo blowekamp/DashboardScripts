@@ -4,7 +4,7 @@
 # gcc (GCC) 4.4.6 20120305 (Red Hat 4.4.6-4)
 
 set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
-set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4.6" )
+set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4-valgrind" )
 
 set( CTEST_BUILD_CONFIGURATION "Debug" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
