@@ -1,12 +1,13 @@
 #
 # Maintainer: blowekamp@mail.nih.gov
 #
-# This build is agaist the system libraries instead of ITK's
 #
 # gcc (GCC) 4.4.6 20120305 (Red Hat 4.4.6-4)
 
+set ( dashboard_git_branch "next" )
+
 set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
-set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4-system" )
+set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4-WrapITK" )
 
 set( CTEST_BUILD_CONFIGURATION "Debug" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
@@ -26,13 +27,16 @@ set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 8)
 SET (dashboard_cache "
     CMAKE_CXX_COMPILER=/usr/lib64/ccache/g++
     CMAKE_C_COMPILER=/usr/lib64/ccache/gcc
-    Module_ITKReview:BOOL=ON
-    ITK_USE_SYSTEM_HDF5:BOOL=ON
-    ITK_USE_SYSTEM_JPEG:BOOL=ON
-    ITK_USE_SYSTEM_PNG:BOOL=ON
-    ITK_USE_SYSTEM_TIFF:BOOL=ON
-    ITK_USE_SYSTEM_ZLIB:BOOL=ON
+    ITK_LEGACY_REMOVE:BOOL=ON
+    ITK_WRAPPING:BOOL=ON
+    WRAP_PYTHON:BOOL=ON
+    WRAP_LUA:BOOL=OFF
+    WRAP_JAVA:BOOL=OFF
+    WRAP_CSHARP:BOOL=OFF
+    WRAP_TCL:BOOL=OFF
+    WRAP_R:BOOL=OFF
+    WRAP_RUBY:BOOL=OFF
 " )
 
 
-include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)

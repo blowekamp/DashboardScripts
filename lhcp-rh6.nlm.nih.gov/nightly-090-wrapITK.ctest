@@ -1,0 +1,57 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+#
+# gcc (GCC) 4.4.6 20120305 (Red Hat 4.4.6-4)
+
+set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4-WrapITK" )
+
+set( CTEST_BUILD_CONFIGURATION "Debug" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+set( dashboard_model Nightly )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 8)
+
+# this is the initial cache to use for the binary tree.
+SET (dashboard_cache "
+   CMAKE_CXX_COMPILER=/usr/lib64/ccache/g++
+   CMAKE_C_COMPILER=/usr/lib64/ccache/gcc
+
+   Module_ITKReview:BOOL=ON
+
+   BUILD_SHARED_LIBS:BOOL=ON
+   ITK_WRAP_PYTHON:BOOLS=ON
+   ITK_USE_CCACHE:BOOL=ON
+   ITK_USE_SYSTEM_SWIG:BOOL=OFF
+
+   ITK_WRAP_complex_double:BOOL=ON
+   ITK_WRAP_complex_float:BOOL=ON
+   ITK_WRAP_covariant_vector_double:BOOL=ON
+   ITK_WRAP_covariant_vector_float:BOOL=ON
+   ITK_WRAP_double:BOOL=ON
+   ITK_WRAP_float:BOOL=ON
+   ITK_WRAP_rgb_unsigned_char:BOOL=ON
+   ITK_WRAP_rgb_unsigned_short:BOOL=ON
+   ITK_WRAP_rgba_unsigned_char:BOOL=ON
+   ITK_WRAP_rgba_unsigned_short:BOOL=ON
+   ITK_WRAP_signed_char:BOOL=ON
+   ITK_WRAP_signed_long:BOOL=ON
+   ITK_WRAP_signed_short:BOOL=ON
+   ITK_WRAP_unsigned_char:BOOL=ON
+   ITK_WRAP_unsigned_long:BOOL=ON
+   ITK_WRAP_unsigned_short:BOOL=ON
+   ITK_WRAP_vector_double:BOOL=ON
+   ITK_WRAP_vector_float:BOOL=ON
+" )
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
