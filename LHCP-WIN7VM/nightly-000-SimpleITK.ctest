@@ -3,12 +3,12 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE lhcp-win7vm.nlm )
-set( CTEST_BUILD_NAME Win32-vs9-release )
+set( CTEST_BUILD_NAME Win32-vs10-release )
 set( CTEST_CONFIGURATION_TYPE Release )
-set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008" )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 10 2010" )
 set( CTEST_GIT_COMMAND "C:/Program Files/Git/bin/git.exe" )
 
-set ( CTEST_DASHBOARD_ROOT c:/d/vs9-release )
+set ( CTEST_DASHBOARD_ROOT c:/d/vs10-release )
 
 set ( CTEST_TEST_ARGS PARALLEL_LEVEL 1 )
 set ( CTEST_TEST_TIMEOUT 3000 )
@@ -18,7 +18,7 @@ set ( dashboard_git_branch "release" )
 set (dashboard_cache "
     BUILD_SHARED_LIBS:BOOL=OFF
     WRAP_LUA:BOOL=OFF
-    WRAP_PYTHON:BOOL=ON
+    WRAP_PYTHON:BOOL=OFF
     WRAP_JAVA:BOOL=ON
     WRAP_CSHARP:BOOL=ON
     WRAP_TCL:BOOL=OFF
