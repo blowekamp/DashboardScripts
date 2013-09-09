@@ -3,22 +3,37 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE lhcp-win7vm2.nlm )
-set( CTEST_BUILD_NAME vs10-SimpleITK-super-next )
+set( CTEST_BUILD_NAME "Win32-vs9-py33-release" )
 set( CTEST_CONFIGURATION_TYPE Release )
-set( CTEST_CMAKE_GENERATOR "Visual Studio 10" )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008" )
 set ( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
 
-set ( CTEST_DASHBOARD_ROOT "c:/d/vs10-32" )
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs9-release-32" )
 
-set ( dashboard_git_branch "next" )
+set ( dashboard_git_branch "release" )
+
+# this is the third build on this directory for python32
+set ( dashboard_no_clean  1)
+
 
 set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
-set (dashboard_cache "
-  CSHARP_PLATFORM:STRING=x86
-")
+
+set (dashboard_configure_options 
+    -DPYTHON_EXECUTABLE:FILEPATH=C:/Python33-win32/python.exe 
+    -DPYTHON_INCLUDE_DIR:PATH=C:/Python33-win32/include 
+    -DPYTHON_LIBRARY:FILEPATH=C:/Python33-win32/libs/python33.lib
+    -DWRAP_JAVA:BOOL=OFF
+    -DWRAP_CSHARP:BOOL=OFF
+    )
 
 
+
+set(PYTHON_VIRTUALENV "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Testing/Installation")
+file( REMOVE_RECURSE ${PYTHON_VIRTUALENV})
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 

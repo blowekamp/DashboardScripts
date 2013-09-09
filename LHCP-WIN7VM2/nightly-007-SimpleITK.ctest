@@ -19,7 +19,7 @@ set ( dashboard_no_clean  1)
 set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
-set (ctest_configure_options
+set (dashboard_configure_options
     -DPYTHON_EXECUTABLE:FILEPATH=C:/Python32/python.exe
     -DPYTHON_INCLUDE_DIR:PATH=C:/Python32/include
     -DPYTHON_LIBRARY:FILEPATH=C:/Python32/libs/python32.lib
@@ -27,6 +27,8 @@ set (ctest_configure_options
     -DWRAP_CSHARP:BOOL=OFF
     )
 
+set(PYTHON_VIRTUALENV "${CTEST_DASHBOARD_ROOT}/SimpleITK-build/SimpleITK-build/Testing/Installation")
+file( REMOVE_RECURSE ${PYTHON_VIRTUALENV})
 
 include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
