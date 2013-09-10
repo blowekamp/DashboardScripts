@@ -12,7 +12,7 @@ set( CTEST_BUILD_NAME "Ubuntu10-gcc43-super-${dashboard_git_branch}" )
 #  Set how and where to build
 set( CTEST_BUILD_CONFIGURATION "Release" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
-set ( CTEST_DASHBOARD_ROOT "/scratch/blowekamp/dashboards/${CTEST_BUILD_NAME}" )
+set ( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
 
 set( dashboard_model Nightly )
 

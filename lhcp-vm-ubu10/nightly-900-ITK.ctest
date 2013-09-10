@@ -10,7 +10,7 @@ set( CTEST_BUILD_NAME "Ubuntu-x86_64-gcc4.4.3-maint" )
 # Set how and where to build
 set( CTEST_BUILD_CONFIGURATION "Release" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
-set( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
 
 set( dashboard_model Nightly )
 
