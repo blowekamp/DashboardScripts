@@ -1,0 +1,33 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+cmake_minimum_required ( VERSION 2.8.2 )
+
+# set some options
+set ( dashboard_git_branch "next" )
+set( CTEST_BUILD_CONFIGURATION "Debug" )
+
+# Set names
+set( CTEST_SITE "mini5.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-SimpleITK-super-${dashboard_git_branch}-${CTEST_BUILD_CONFIGURATION}" )
+
+
+#  Set how and where to build
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+
+# Enable usage of multi-processors
+set ( CTEST_BUILD_FLAGS -j2 )
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 2 )
+
+set ( dashboard_cache "
+CMAKE_CXX_COMPILER:STRING=/usr/bin/g++-4.2
+CMAKE_C_COMPILER:STRING=/usr/bin/gcc-4.2
+")
+
+
+# Include common ctest script
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
