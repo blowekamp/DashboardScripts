@@ -53,5 +53,4 @@ SET (dashboard_cache "
    ITK_WRAP_vector_float:BOOL=ON
 ")
 
-include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
 include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)

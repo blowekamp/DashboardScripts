@@ -17,17 +17,17 @@ endif()
 set( CTEST_TEST_TIMEOUT 3000 )
 
 
-macro(dashboard_hook_init)
-  set( REMOTE_DATA "
-itk_fetch_module(LesionSizingToolkit
-  \"Framework for determining the sizes of lesions in medical images.\"
-  GIT_REPOSITORY http://public.kitware.com/LesionSizingToolkit.git
-  GIT_TAG 76235ea768b
-  )" )
+#macro(dashboard_hook_init)
+#  set( REMOTE_DATA "
+#itk_fetch_module(LesionSizingToolkit
+#  \"Framework for determining the sizes of lesions in medical images.\"
+#  GIT_REPOSITORY http://public.kitware.com/LesionSizingToolkit.git
+#  GIT_TAG 76235ea768b
+#  )" )
 
-  file(WRITE "${CTEST_DASHBOARD_ROOT}/ITK/Modules/Remotes/ExternalTemplate.remote.cmake"
-    ${REMOTE_DATA} )
-endmacro()
+#  file(WRITE "${CTEST_DASHBOARD_ROOT}/ITK/Modules/Remotes/ExternalTemplate.remote.cmake"
+#    ${REMOTE_DATA} )
+#endmacro()
 
 # this is the initial cache to use for the binary tree, be careful to escape
 # any quotes inside of this string if you use it

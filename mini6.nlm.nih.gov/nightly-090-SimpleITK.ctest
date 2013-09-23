@@ -32,7 +32,7 @@ set (dashboard_cache "
     PYTHON_EXECUTABLE:FILEPATH=/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7
     WRAP_LUA:BOOL=OFF
     WRAP_PYTHON:BOOL=ON
-    WRAP_JAVA:BOOL=ON
+    WRAP_JAVA:BOOL=OFF
     WRAP_CSHARP:BOOL=OFF
     WRAP_TCL:BOOL=OFF
     WRAP_R:BOOL=OFF

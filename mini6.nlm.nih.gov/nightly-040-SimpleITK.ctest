@@ -31,5 +31,6 @@ set (dashboard_cache "
     ITK_USE_SYSTEM_HDF5:BOOL=ON
 ")
 
-include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
-include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
+include("${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake")
+message("cache: ${dashboard_cache}")
+include("${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake")
