@@ -40,7 +40,6 @@ SET (dashboard_cache "
     ITK_VISIBLEHUMAN_DATA_ROOT:PATH=/nfs/Data/VisibleHuman
 
     Module_ITKReview:BOOL=ON
-    ITK_USE_KWSTYLE:BOOL=ON
 ")
 
 include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
