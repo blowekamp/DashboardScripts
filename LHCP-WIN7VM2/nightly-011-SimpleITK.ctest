@@ -1,0 +1,31 @@
+# this minimal version of cmake is needed to automatically update the
+# git submoules
+cmake_minimum_required ( VERSION 2.8.2 )
+
+set( CTEST_SITE lhcp-win7vm2.nlm )
+set( CTEST_BUILD_NAME vs9-java-release )
+set( CTEST_CONFIGURATION_TYPE Release )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008 Win64" )
+set ( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
+
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs9-release" )
+
+
+set ( dashboard_git_branch "release" )
+
+# this is the another build on this directory for java
+set ( dashboard_no_clean  1)
+
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
+set ( CTEST_TEST_TIMEOUT 3000 )
+
+set (dashboard_configure_options
+    -DWRAP_PYTHON:BOOL=OFF
+    -DWRAP_JAVA:BOOL=ON
+    -DWRAP_CSHARP:BOOL=OFF
+    -DBUILD_TESTING:BOOL=ON
+    )
+
+include(${CTEST_SCRIPT_DIRECTORY}/../UploadHook.cmake)
+include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
+
