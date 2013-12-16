@@ -1,12 +1,12 @@
 #
 # Maintainer: blowekamp@mail.nih.gov
 #
-# This build is agaist the system libraries instead of ITK's
+# 32-bit build on 64-bit OS
 #
 # gcc (GCC) 4.4.7 20120313 (Red Hat 4.4.7-4)
 
 set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
-set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.4-system" )
+set( CTEST_BUILD_NAME "Linux-x64_64-gcc4.4-m32" )
 
 set( CTEST_BUILD_CONFIGURATION "Debug" )
 set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
@@ -26,12 +26,9 @@ set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 8)
 SET (dashboard_cache "
     CMAKE_CXX_COMPILER=/usr/lib64/ccache/g++
     CMAKE_C_COMPILER=/usr/lib64/ccache/gcc
+    CMAKE_C_FLAGS=-m32
+    CMAKE_CXX_FLAGS=-m32
     Module_ITKReview:BOOL=ON
-    ITK_USE_SYSTEM_HDF5:BOOL=ON
-    ITK_USE_SYSTEM_JPEG:BOOL=ON
-    ITK_USE_SYSTEM_PNG:BOOL=ON
-    ITK_USE_SYSTEM_TIFF:BOOL=ON
-    ITK_USE_SYSTEM_ZLIB:BOOL=ON
 " )
 
 
