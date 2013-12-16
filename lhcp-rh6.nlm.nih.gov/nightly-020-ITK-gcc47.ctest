@@ -1,11 +1,10 @@
 #
 # Maintainer: blowekamp@mail.nih.gov
 #
-# This build is agaist the system libraries instead of ITK's
 #
-# gcc (GCC) 4.7.0 20120507 (Red Hat 4.7.0-5)
+# gcc (GCC) 4.7.2 20121015 (Red Hat 4.7.2-5)
 
-set( ENV{PATH} "/opt/rh/devtoolset-1.0/root/usr/bin:$ENV{PATH}")
+set( ENV{PATH} "/opt/rh/devtoolset-1.1/root/usr/bin:$ENV{PATH}")
 
 set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
 set( CTEST_BUILD_NAME "Linux-x86_64-gcc4.7" )
@@ -26,6 +25,8 @@ set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 8)
 
 # this is the initial cache to use for the binary tree.
 SET (dashboard_cache "
+    CMAKE_C_COMPILER=/opt/rh/devtoolset-1.1/root/usr/bin/gcc
+    CMAKE_CXX_COMPILER=/opt/rh/devtoolset-1.1/root/usr/bin/g++
     Module_ITKReview:BOOL=ON
 " )
 
