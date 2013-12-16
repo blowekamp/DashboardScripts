@@ -1,0 +1,38 @@
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+# Intel Compiler
+# icpc (ICC) 14.0.0 20130728
+
+
+set( CTEST_SITE "$ENV{HOSTNAME}.nlm" )
+set( CTEST_BUILD_NAME "Linux-x86_64-icc14" )
+
+set( CTEST_BUILD_CONFIGURATION "Debug" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set( CTEST_DASHBOARD_ROOT "/scratch/dashboards/${CTEST_BUILD_NAME}" )
+set( dashboard_model Nightly )
+
+include( ProcessorCount )
+ProcessorCount( PROCESSOR_COUNT )
+if(PROCESSOR_COUNT)
+  set( CTEST_BUILD_FLAGS -j${PROCESSOR_COUNT})
+  set( CTEST_TEST_ARGS PARALLEL_LEVEL ${PROCESSOR_COUNT} )
+endif()
+
+set(ENV{ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS} 8)
+
+SET(INTEL_COMPOSER_ROOT "/opt/intel/composer_xe_2013_sp1.0.080")
+# this is the initial cache to use for the binary tree.
+SET (dashboard_cache "
+    CMAKE_CXX_COMPILER:PATH=${INTEL_COMPOSER_ROOT}/bin/intel64/icpc
+    CMAKE_C_COMPILER:PATH=${INTEL_COMPOSER_ROOT}/bin/intel64/icc
+    CMAKE_AR:PATH=${INTEL_COMPOSER_ROOT}/bin/intel64/xiar
+    CMAKE_LINKER:PATH=${INTEL_COMPOSER_ROOT}/bin/intel64/xild
+    CMAKE_CXX_FLAGS:STRING=-fp-model precise
+    CMAKE_C_FLAGS:STRING=-fp-model precise
+    Module_ITKReview:BOOL=ON
+" )
+
+
+include(${CTEST_SCRIPT_DIRECTORY}/../ITK-dashboard/itk_common.cmake)
