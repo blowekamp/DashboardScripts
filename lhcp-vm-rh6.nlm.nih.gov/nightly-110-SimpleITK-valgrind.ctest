@@ -12,6 +12,7 @@ set ( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
 set ( CTEST_DASHBOARD_ROOT "/scratch/$ENV{USER}/dashboards/${CTEST_BUILD_NAME}" )
 
 
+
 include( ProcessorCount )
 ProcessorCount( PROCESSOR_COUNT )
 if(PROCESSOR_COUNT)
@@ -20,13 +21,13 @@ if(PROCESSOR_COUNT)
 endif()
 
 
-set( CTEST_TEST_TIMEOUT 20000 )
+set( CTEST_TEST_TIMEOUT 10000 )
 set( CTEST_MEMORYCHECK_COMMAND "/usr/bin/valgrind" )
 set( CTEST_MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all")
 set( CTEST_MEMORYCHECK_SUPPRESSIONS_FILE ${CTEST_SCRIPT_DIRECTORY}/SimpleITKValgrind.supp)
 
 # we need to manually set path for ITK libraries
-set( ENV{LD_LIBRARY_PATH} ${CTEST_DASHBOARD_ROOT}/SimpleITK-build/ITK-pref/lib:$ENV{LD_LIBRARY_PATH} )
+set( ENV{LD_LIBRARY_PATH} ${CTEST_DASHBOARD_ROOT}/SimpleITK-build/ITK-build/lib:$ENV{LD_LIBRARY_PATH} )
 
 set( dashboard_model Nightly )
 set( dashboard_git_branch "next" )
