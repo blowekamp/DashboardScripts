@@ -3,12 +3,12 @@
 cmake_minimum_required ( VERSION 2.8.2 )
 
 set( CTEST_SITE lhcp-vm-win702.nlm )
-set( CTEST_BUILD_NAME Win64-vs9-super-next )
+set( CTEST_BUILD_NAME Win32-vs9-super-next)
 set( CTEST_CONFIGURATION_TYPE Release )
-set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008 Win64" )
+set( CTEST_CMAKE_GENERATOR "Visual Studio 9 2008" )
 set ( CTEST_GIT_COMMAND "C:/Program Files \(x86\)/Git/bin/git.exe" )
 
-set ( CTEST_DASHBOARD_ROOT "c:/d/vs9" )
+set ( CTEST_DASHBOARD_ROOT "c:/d/vs9-32" )
 
 set ( dashboard_git_branch "next" )
 
@@ -17,12 +17,8 @@ set ( CTEST_TEST_ARGS PARALLEL_LEVEL 4 )
 set ( CTEST_TEST_TIMEOUT 3000 )
 
 set (dashboard_cache "
-    ITK_USE_64BITS_IDS:BOOL=1
-    CSHARP_PLATFORM:STRING=x64
+  CSHARP_PLATFORM:STRING=x86
 ")
-
-
-set(dashboard_git_branch next)
 
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
 
