@@ -18,6 +18,10 @@ set ( CTEST_TEST_TIMEOUT 3000 )
 
 set (dashboard_cache "
   CSHARP_PLATFORM:STRING=x86
+
+  PYTHON_EXECUTABLE:FILEPATH=C:/Python33-32/python.exe
+  PYTHON_INCLUDE_DIR:PATH=C:/Python33-32/include
+  PYTHON_LIBRARY:FILEPATH=C:/Python33-32/libs/python33.lib
 ")
 
 include(${CTEST_SCRIPT_DIRECTORY}/../SimpleITK-dashboard/simpleitk_common.cmake)
