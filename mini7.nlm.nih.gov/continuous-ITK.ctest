@@ -1,3 +1,9 @@
+# Client maintainer: blowekamp@mail.nih.gov
+#
+# OSX Maverics
+#
+# Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
+# 
 
 set( CTEST_SITE "mini7.nlm" )
 set( CTEST_BUILD_NAME "MacOSX-clang" )
@@ -27,7 +33,7 @@ SET (dashboard_cache "
     ITK_LEGACY_REMOVE:BOOL=OFF
     ITK_LEGACY_SILENT:BOOL=ON
     ITK_USE_KWSTYLE:BOOL=OFF
-    ITK_USE_GPU:BOOL=ON
+#    ITK_USE_GPU:BOOL=ON where is opencl on maverics?
     CMAKE_CXX_COMPILER:STRING=/usr/bin/clang++
     CMAKE_C_COMPILER:STRING=/usr/bin/clang
 ")
